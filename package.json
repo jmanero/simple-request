@@ -1,0 +1,17 @@
+{
+	"name" : "simple-request",
+	"version" : "0.0.1",
+	"description" : "Simple wrapper of the native HTTP client",
+	"author" : {
+		"name" : "John Manero",
+		"email" : "jmanero@dyn.com"
+	},
+	"license":  "MIT",
+	"repository" : {
+		"type" : "git",
+		"url" : "https://github.com/jmanero/simple-request"
+	},
+	"engines": {
+		"node": ">=0.8.18"
+	}
+}
