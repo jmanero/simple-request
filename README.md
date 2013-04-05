@@ -1,11 +1,43 @@
-NSQ Client for Node.JS
-======================
-A simple implementation of the NSQ-V2 protocol using native Buffer objects,
-based entirely upon the protocol documentation found in
-[Bitly's GitHub project](https://github.com/bitly/nsq/blob/master/docs/protocol.md).
+Simple Request
+==============
+A _really_ simple wrapper for native HTTP[S] clients.
 
-### Not Implemented... Yet
- * `MPUB` operation
+This module encapsulates the boiler-plate task of aggregating chunked responses
+from HTTP servers. It has a few simple helpers to stringify and parse JSON bodies
+and set several required headers if not present.
+
+### Usage
+
+    var Client = require('simple-request');
+    var c = new Client(); // Default HTTP
+    
+    // For HTTPS, or an other interface that implements the same API:
+    // var HTTPS = require('https');
+    // var c = new Client(HTTPS);
+    
+    // To disable auto-generation of HTTP headers:
+    // var SomeProto = require('some-proto');
+    // var c = new Client(SomeProto, false);
+    
+    c.request({
+        hostname : "google.com",
+        port : 80,
+        method : "GET",
+        headers : {
+            'x-foo-bar' : "Hello World"
+        },
+        path : "/search?q=define+chunked"
+    }, function(err, res) {
+        if(err) {
+           console.log("Oh No");
+           return;
+       }
+       
+       console.log(res.data); // The response body is returned in the data attribute
+       // If response header "Content-Type: application/json[; encoding=...]" is set,
+       // res.body will contain the parsed object. 
+    });
+        
 
 ## License
 Copyright (c) 2013 John Manero, Dynamic Network Services Inc.
