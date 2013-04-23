@@ -3,8 +3,36 @@ Simple Request
 A _really_ simple wrapper for native HTTP[S] clients.
 
 This module encapsulates the boiler-plate task of aggregating chunked responses
-from HTTP servers. It has a few simple helpers to stringify and parse JSON bodies
-and set several required headers if not present.
+from HTTP servers. It has a few simple helpers to stringify and parse JSON bodies,
+set several required headers if not present, and wait automatically for a
+`100 CONTINUE` head to send data if the `expect` parameter is passed in a request
+method's `options` hash.
+
+### Constructor
+`var client = Request(params)`
+
+#### Params (optional)
+ * `protocol` Anything that matches Node.JS's [HTTP API](http://nodejs.org/docs/v0.8.19/api/http.html), specifically, [HTTP.request](http://nodejs.org/docs/v0.8.19/api/http.html#http_http_request_options_callback) Default is `HTTP`
+ * `host` A default target for the client
+ * `port` A default port for the target
+
+### Request
+`client.request(options, body, callback)`
+
+#### Options
+ * Anything supported by [HTTP.request](http://nodejs.org/docs/v0.8.19/api/http.html#http_http_request_options_callback)
+ * `expect` Set the `Expect: 100-Continue` header, and don't send pay-load until the 100 head is received
+
+#### Body
+Must be an object that can be consumed by `JSON.stringify` or casted to a
+string, or `null`
+
+#### Callback
+`function(error, response)` will be passed error objects, or the protocol's
+response object. If the response contained a pay-load, it will be in string-form
+in `response.data`. If the response `Content-Type` was `application/json[; ...]`,
+the parsed object will be in `response.body`. In this case, an invalid JSON pay-load
+will cause an error to be returned.
 
 ### Usage
 
@@ -14,10 +42,6 @@ and set several required headers if not present.
     // For HTTPS, or an other interface that implements the same API:
     // var HTTPS = require('https');
     // var c = new Client(HTTPS);
-    
-    // To disable auto-generation of HTTP headers:
-    // var SomeProto = require('some-proto');
-    // var c = new Client(SomeProto, false);
     
     c.request({
         hostname : "google.com",
@@ -38,6 +62,12 @@ and set several required headers if not present.
        // res.body will contain the parsed object. 
     });
         
+
+### Helper Methods
+ * `get(path, [options, ]callback)`
+ * `post(path, body, [options, ]callback)`
+ * `put(path, body, [options, ]callback)`
+ * 'delete(path, [options, ]callback)`
 
 ## License
 Copyright (c) 2013 John Manero, Dynamic Network Services Inc.
