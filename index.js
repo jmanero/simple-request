@@ -22,7 +22,7 @@ Client.prototype.request = function(options, body, callback) {
 	}
 	options.path = options.path || '/';
 	if (options.query) {
-		options.path += '?' + QS.format(options.query);
+		options.path += '?' + QS.stringify(options.query);
 	}
 
 	if (body) {
