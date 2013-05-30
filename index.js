@@ -90,6 +90,8 @@ Client.prototype.request = function(options, body, callback) {
 			req.write(data);
 			req.end();
 		}
+	} else {
+		req.end();
 	}
 };
 
