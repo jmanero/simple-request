@@ -67,7 +67,7 @@ will cause an error to be returned.
  * `get(path, [options, ]callback)`
  * `post(path, body, [options, ]callback)`
  * `put(path, body, [options, ]callback)`
- * 'delete(path, [options, ]callback)`
+ * `delete(path, [options, ]callback)`
 
 ## License
 Copyright (c) 2013 John Manero, Dynamic Network Services Inc.
