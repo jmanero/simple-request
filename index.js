@@ -14,7 +14,7 @@ Client.prototype.request = function(options, body, callback) {
 	var data = false;
 
 	// Defaults
-	options.hostname = options.hostname || options.host || this.host;
+	options.host = options.hostname || options.host || this.host;
 	options.port = options.port || this.port;
 	options.headers = options.headers || {};
 	if(options.expect) {
